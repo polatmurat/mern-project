@@ -1,10 +1,10 @@
+import Routing from "./routes/Routing"
+
 function App() {
 
   return (
     <>
-      <div>
-      
-      </div>
+      <Routing />
     </>
   )
 }
