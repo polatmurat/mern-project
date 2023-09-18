@@ -1,3 +1,15 @@
+// /** @type {import('tailwindcss').Config} */
+// export default {
+//   content: [
+//     "./index.html",
+//     "./src/**/*.{js,ts,jsx,tsx}",
+//   ],
+//   theme: {
+//     extend: {},
+//   },
+//   plugins: [],
+// }
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -166,6 +178,8 @@ export default {
       palette2: '#393053',
       palette3: '#443C68',
       palette4: '#635985',
+      btnprimary: '#0095f6',
+      btnsecondary: '#1877f2',
       dark1: '#030301',
       dark2: '#1a1d24'
     }),
