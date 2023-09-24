@@ -4,12 +4,15 @@ const colors = require('colors')
 const cors = require('cors')
 const connect = require('./config/db')
 const app = express()
+const userRoute = require('./routes/userRoute')
 
 const PORT = process.env.PORT;
 
 app.use(express.json())
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
+
+app.use("/api", userRoute);
 
 app.listen(PORT, () => {
     console.log(`The server is running at ${PORT} port!`.magenta.italic);
