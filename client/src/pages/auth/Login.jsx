@@ -1,6 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuthLoginMutation } from "../../features/auth/authService";
+import { setAdminToken } from "../../app/reducers/authReducer";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [loginData, setLoginData] = useState({
     username: "",
     password: "",
@@ -13,13 +20,29 @@ const Login = () => {
     });
   };
 
+  const [login, response] = useAuthLoginMutation();
+
+  console.log("Response : ", response);
+
+  const errors = response.error?.data?.errors ? response.error.data.errors : [];
+
   const handleForm = (e) => {
     e.preventDefault();
     const { username, password } = loginData;
-    if(username && password) {
-      
+    if (username && password) {
+      login(loginData);
     }
   };
+
+  useEffect(() => {
+    if (response.isSuccess) {
+      const token = response?.data?.token;
+
+      localStorage.setItem("admin-token", token);
+      dispatch(setAdminToken(token));
+      navigate("/dashboard/products");
+    }
+  }, [response.isSuccess]);
 
   return (
     <>
@@ -39,7 +62,10 @@ const Login = () => {
                 alt=""
                 className="w-[183px] h-[85px] mx-auto mt-10 mb-3"
               />
-              <form className="w-full flex justify-center flex-col items-center" onSubmit={handleForm}>
+              <form
+                className="w-full flex justify-center flex-col items-center"
+                onSubmit={handleForm}
+              >
                 <input
                   type="text"
                   name="username"

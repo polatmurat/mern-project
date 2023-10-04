@@ -43,6 +43,8 @@ const login = async (req, res) => {
     if (errors.isEmpty()) {
         const { username, password } = req.body;
 
+        console.log(username, password);
+        
         try {
 
             const client = await connect();
