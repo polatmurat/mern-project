@@ -6,11 +6,11 @@ const { comparePassword, createToken, hashedPassword } = require('../services/au
 const register = async (req, res) => {
     const errors = validationResult(req);
     if (errors.isEmpty()) {
-        const { name, email, username, password } = req.body;
+        const { email, name, username, password } = req.body;
         try {
             const client = await connect();
 
-            const userCollection = client.db('instagram').collection('user');
+            const UserCollection = client.db('instagram').collection('user');
 
             const emailExist = await UserCollection.findOne({ email });
 
@@ -21,9 +21,9 @@ const register = async (req, res) => {
 
             const cryptedPassword = await hashedPassword(password);
 
-            const user = new User(name, email, cryptedPassword, false);
+            const user = new User(email, name, username, cryptedPassword, false);
 
-            await userCollection.insertOne(user);
+            await UserCollection.insertOne(user);
 
             const token = createToken(user);
 
@@ -49,13 +49,15 @@ const login = async (req, res) => {
 
             const client = await connect();
 
-            const userCollection = client.db('instagram').collection('user');
+            const UserCollection = client.db('instagram').collection('user');
 
-            const user = await userCollection.findOne({ username: username });
+            const user = await UserCollection.findOne({ username: username });
 
             if (user) {
                 if (await comparePassword(password, user.password)) {
                     const token = await createToken(user);
+
+                    console.log(token);
 
                     if (user.admin) {
                         return res.status(201).json({ token: token, admin: true });

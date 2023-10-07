@@ -21,6 +21,10 @@ const Login = () => {
   };
 
   const [login, response] = useAuthLoginMutation();
+  
+  const routeRegister = () => {
+    navigate('/register')
+  }
 
   console.log("Response : ", response);
 
@@ -40,7 +44,7 @@ const Login = () => {
 
       localStorage.setItem("admin-token", token);
       dispatch(setAdminToken(token));
-      navigate("/dashboard/products");
+      navigate("/");
     }
   }, [response.isSuccess]);
 
@@ -99,9 +103,9 @@ const Login = () => {
             </div>
             <div className="border-2 py-4 mt-3 text-center text-sm">
               Hesabın yok mu?{" "}
-              <a href="#" className="text-btnsecondary font-medium">
+              <button onClick={routeRegister} className="text-btnsecondary font-medium">
                 Kaydol
-              </a>
+              </button>
             </div>
           </div>
         </div>
