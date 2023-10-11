@@ -51,7 +51,7 @@ const Login = () => {
     }
 
     if(response.isError) {
-      toast('Kullanıcı adı veya şifre yanlış')
+      toast.error('Kullanıcı adı veya şifre yanlış')
       navigate('/')
 
     }

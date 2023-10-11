@@ -61,11 +61,11 @@ const Register = () => {
   useEffect(() => {
     if (response.isError) {
       console.error("Kaydolma işlemi başarısız oldu:", response.error);
-      response.data.errors.map(error => toast(`Hata :  ${error.msg}`))
+      response.data.errors.map(error => toast.error(`Hata :  ${error.msg}`))
     }
     if (response.isSuccess) {
       navigate("/");
-      toast('Kaydolma başarılı.')
+      toast.success('Kaydolma başarılı.')
     }
   }, [response]);
 
