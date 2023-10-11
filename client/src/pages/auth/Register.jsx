@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setAdminToken } from "../../app/reducers/authReducer";
+import { setUserToken } from "../../app/reducers/authReducer";
 import { AiFillFacebook } from "react-icons/ai";
 import { useUserRegisterMutation } from "../../features/auth/authService";
+import toast, { Toaster } from 'react-hot-toast';
 
 const Register = () => {
   const [data, setData] = useState([]);
@@ -54,20 +55,17 @@ const Register = () => {
   const handleForm = (e) => {
     e.preventDefault();
     const { email, name, username, password } = registerData;
-    console.log("mpol");
     dispatch(register(registerData));
   };
 
   useEffect(() => {
     if (response.isError) {
       console.error("Kaydolma işlemi başarısız oldu:", response.error);
+      response.data.errors.map(error => toast(`Hata :  ${error.msg}`))
     }
     if (response.isSuccess) {
-      const token = response?.data?.token;
-
-      localStorage.setItem("admin-token", token);
-      dispatch(setAdminToken(token));
       navigate("/");
+      toast('Kaydolma başarılı.')
     }
   }, [response]);
 

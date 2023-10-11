@@ -2,10 +2,8 @@ import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Private = ({ children }) => {
-
-    const adminToken = false;
-
-  return adminToken ? children : <Navigate to="/login" />;
+  const { userToken } = useSelector((state) => state.authReducer);
+  return userToken ? children : <Navigate to="/login" />;
 };
 
 export default Private;

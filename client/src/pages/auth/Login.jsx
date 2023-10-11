@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useAuthLoginMutation } from "../../features/auth/authService";
-import { setAdminToken } from "../../app/reducers/authReducer";
+import { setUserToken } from "../../app/reducers/authReducer";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -41,12 +42,20 @@ const Login = () => {
   useEffect(() => {
     if (response.isSuccess) {
       const token = response?.data?.token;
-
-      localStorage.setItem("admin-token", token);
-      dispatch(setAdminToken(token));
+      if(token) {
+        console.log(token);
+        localStorage.setItem('user-token', token)
+      }
+      dispatch(setUserToken(token));
       navigate("/");
     }
-  }, [response.isSuccess]);
+
+    if(response.isError) {
+      toast('Kullanıcı adı veya şifre yanlış')
+      navigate('/')
+
+    }
+  }, [response]);
 
   return (
     <>

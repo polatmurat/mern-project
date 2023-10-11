@@ -1,3 +1,4 @@
+import { Toaster } from "react-hot-toast"
 import Routing from "./routes/Routing"
 
 function App() {
@@ -5,6 +6,7 @@ function App() {
   return (
     <>
       <Routing />
+      <Toaster />
     </>
   )
 }

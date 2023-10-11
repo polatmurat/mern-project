@@ -4,7 +4,7 @@ const { loginValidations, registerValidations } = require('../validations/userVa
 const { login, register } = require('../controllers/userController')
 
 
-router.post('/register', register)
-router.post('/login', login)
+router.post('/register', registerValidations, register)
+router.post('/login', loginValidations, login)
 
 module.exports = router;

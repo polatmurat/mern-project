@@ -42,8 +42,6 @@ const login = async (req, res) => {
     const errors = validationResult(req);
     if (errors.isEmpty()) {
         const { username, password } = req.body;
-
-        console.log(username, password);
         
         try {
 
@@ -54,6 +52,7 @@ const login = async (req, res) => {
             const user = await UserCollection.findOne({ username: username });
 
             if (user) {
+                console.log(user);
                 if (await comparePassword(password, user.password)) {
                     const token = await createToken(user);
 
